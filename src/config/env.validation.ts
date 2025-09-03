@@ -22,7 +22,7 @@ export default () => {
     DB_USER: Joi.string().required(),
     DB_PASSWORD: Joi.string().required(),
     DB_NAME: Joi.string().required(),
-
+    REDIS_PORT: Joi.number().default(6379),
     CONTENTFUL_SPACE_ID: Joi.string().required(),
     CONTENTFUL_ACCESS_TOKEN: Joi.string().required(),
     CONTENTFUL_ENVIRONMENT: Joi.string().required(),

@@ -6,7 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { ConfigService } from '@nestjs/config';
-// import { ThrottlerGuard } from '@nestjs/throttler';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -22,19 +22,19 @@ async function bootstrap() {
   );
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new TransformInterceptor());
-  // app.useGlobalGuards(app.get(ThrottlerGuard)); 
+  // app.useGlobalGuards(app.get(ThrottlerGuard));
 
   const prefix = config.get<string>('GLOBAL_PREFIX') || 'api';
   app.setGlobalPrefix(prefix);
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Contentful Products API')
-    .setDescription('Public products + Private reports')
+    .setTitle('Products API')
+    .setDescription('API documentation for accessing product info, authentication, and reports.')
     .setVersion('1.0.0')
     .addBearerAuth()
     .build();
-  const doc = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup(`${prefix}/docs`, app, doc);
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup(`api/docs`, app, document);
 
   const port = config.get<number>('PORT') || 3000;
   await app.listen(port);

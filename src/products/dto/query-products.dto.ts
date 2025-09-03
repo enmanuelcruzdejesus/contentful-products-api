@@ -1,16 +1,9 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import {
-  IsInt,
-  IsNumber,
-  IsOptional,
-  IsPositive,
-  IsString,
-  Max,
-  Min,
-} from 'class-validator';
+import { IsOptional, IsNumber, IsString, Min, IsInt } from 'class-validator';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 
-export class QueryProductsDto {
+export class QueryProductsDto extends PaginationDto {
   @ApiPropertyOptional({ description: 'Page number (1-based)', default: 1 })
   @Transform(({ value }: { value: string }) => parseInt(value, 10))
   @IsInt()
@@ -18,25 +11,19 @@ export class QueryProductsDto {
   @IsOptional()
   page?: number = 1;
 
-  @ApiPropertyOptional({ description: 'Filter by name (icontains)' })
-  @IsString()
   @IsOptional()
+  @IsString()
   name?: string;
 
-  @ApiPropertyOptional({ description: 'Filter by category (exact match)' })
-  @IsString()
   @IsOptional()
+  @IsString()
   category?: string;
 
-  @ApiPropertyOptional({ description: 'Min price' })
-  @Transform(({ value }: { value: string }) => parseFloat(value))
-  @IsNumber()
   @IsOptional()
+  @IsNumber()
   priceMin?: number;
 
-  @ApiPropertyOptional({ description: 'Max price' })
-  @Transform(({ value }: { value: string }) => parseFloat(value))
-  @IsNumber()
   @IsOptional()
+  @IsNumber()
   priceMax?: number;
 }

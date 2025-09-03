@@ -1,4 +1,8 @@
+import 'dotenv/config';
 import * as Joi from 'joi';
+
+console.log(process.env)
+
 
 export default () => {
   const schema = Joi.object({
@@ -8,8 +12,8 @@ export default () => {
     PORT: Joi.number().default(3000),
     GLOBAL_PREFIX: Joi.string().default('api'),
 
-    ADMIN_EMAIL: Joi.string().email().required(),
-    ADMIN_PASSWORD: Joi.string().min(6).required(),
+    // ADMIN_EMAIL: Joi.string().email().required(),
+    // ADMIN_PASSWORD: Joi.string().min(6).required(),
     JWT_SECRET: Joi.string().min(10).required(),
     JWT_EXPIRES_IN: Joi.string().default('1h'),
 
